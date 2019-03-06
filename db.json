@@ -1,0 +1,39 @@
+{
+  "clientes": [
+    {
+      "name": "Carlos Alexander",
+      "lastname": "Rivero Bautista",
+      "id": 1
+    },
+    {
+      "name": "Maria Balbina",
+      "lastname": "Rivero Quintero",
+      "id": 2
+    },
+    {
+      "name": "Cheila Pastora",
+      "lastname": "Bautista Escalante",
+      "id": 3
+    },
+    {
+      "name": "Carlos Alexander",
+      "lastname": "Rivero Bautista",
+      "id": 4
+    },
+    {
+      "name": "Jesus Olivier",
+      "lastname": "Rivero Quintero",
+      "id": 5
+    },
+    {
+      "name": "Mayra",
+      "lastname": "Rivero",
+      "id": 6
+    },
+    {
+      "name": "Pablo",
+      "lastname": "Bonillo",
+      "id": 7
+    }
+  ]
+}
