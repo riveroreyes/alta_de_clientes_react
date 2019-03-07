@@ -12,7 +12,7 @@ const myForm = (props) => {
           name="name"
           className={classes.formField}
           onChange={props.change}
-          value={props.name}
+          value={props.form.name}
         />
         <input
           type="text"
@@ -20,7 +20,7 @@ const myForm = (props) => {
           name="lastname"
           className={classes.formField}
           onChange={props.change}
-          value={props.lastname}
+          value={props.form.lastname}
         />
         <button
           type="button"

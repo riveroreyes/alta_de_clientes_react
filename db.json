@@ -2,12 +2,12 @@
   "clientes": [
     {
       "name": "Carlos Alexander",
-      "lastname": "Mora Hernandez",
+      "lastname": "Rivero Bautista",
       "id": 1
     },
     {
       "name": "Maria Balbina",
-      "lastname": "Mora Hernandez",
+      "lastname": "Rivero",
       "id": 2
     },
     {
@@ -22,28 +22,13 @@
     },
     {
       "name": "Jesus Olivier",
-      "lastname": "Mora Hernandez",
+      "lastname": "Rivero",
       "id": 5
     },
     {
-      "name": "Mayra",
-      "lastname": "Mora Hernandez",
-      "id": 6
-    },
-    {
-<<<<<<< HEAD
-      "name": "Pablo",
-      "lastname": "Mora Hernandez",
-=======
       "name": "Pablo Andrés",
       "lastname": "Bonillo",
->>>>>>> 08cc255c0fa169cfd5d5e8c5ac5e88074ddf8159
       "id": 7
-    },
-    {
-      "name": "Alberto",
-      "lastname": "Roldan",
-      "id": 8
     }
   ]
 }

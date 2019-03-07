@@ -44,23 +44,39 @@ class App extends Component {
 
   }
 
-  updateCliente = async (cliente) => await API.put('clientes/' + this.state.id, cliente)
+  updateCliente = async (cliente) => {
+
+    const resp = await API.put('clientes/' + this.state.id, cliente);
+
+    const clientes = [...this.state.clientes];
+    clientes[this.state.index].name = cliente.name;
+    clientes[this.state.index].lastname = cliente.lastname;
+
+    this.resetForm();
+
+
+  }
 
   insertCliente = async (cliente) => {
     const resp = await API.post('clientes/', cliente);
 
-    if (resp.status === 201) {
-      this.obtenerListado();
-    }
+    this.obtenerListado();
+
+    this.resetForm();
+
 
   }
 
-  deleteCliente = async (id) => {
+  deleteCliente = async (id, index) => {
+
     const resp = await API.delete('clientes/' + id);
 
-    if (resp.status === 200) {
-      this.obtenerListado();
-    }
+    let clientes = [...this.state.clientes];
+    clientes.splice(index, 1);
+
+    this.setState({ clientes: clientes });
+
+    this.resetForm();
 
   }
 
@@ -71,13 +87,11 @@ class App extends Component {
   }
 
   handleChange = (event) => {
-    const target = event.target
-    const value = target.value
-    const name = target.name
-    const form = {...this.state.form}
-    form[name] = value;
-    this.setState({form: form});
-    
+
+    const form = { ...this.state.form }
+    form[event.target.name] = event.target.value;
+    this.setState({ form: form });
+
   }
 
   handleGuardar = () => {
@@ -85,34 +99,18 @@ class App extends Component {
     const name = this.state.form.name;
     const lastname = this.state.form.lastname;
 
-    const clientes = [...this.state.clientes];
-
     const cliente = { name, lastname };
 
     if (this.state.index >= 0) {
-
-      clientes[this.state.index].name = name;
-      clientes[this.state.index].lastname = lastname;
-
       this.updateCliente(cliente);
-
     } else {
-
       this.insertCliente(cliente);
-
     }
-
-    this.resetForm();
-
 
   }
 
-  handleDelete = (id) => {
-
-    this.deleteCliente(id);
-
-    this.resetForm();
-
+  handleDelete = (id, index) => {
+    this.deleteCliente(id, index);
   }
 
   handleEdit = (id) => {
@@ -121,11 +119,10 @@ class App extends Component {
 
     const cliente = this.state.clientes[index];
 
-    const form = {name: cliente.name, lastname:cliente.lastname};
-
-    this.setState({form: form});
+    const form = { name: cliente.name, lastname: cliente.lastname };
 
     this.setState({
+      form: form,
       index: index,
       id: id
     });
@@ -143,15 +140,14 @@ class App extends Component {
 
         <h1>{this.state.title}</h1>
 
-        <MyForm 
+        <MyForm
           textoGuardar={btnTextGuardar}
           guardar={this.handleGuardar}
           change={this.handleChange}
-          name={this.state.form.name}
-          lastname={this.state.form.lastname}
+          form={this.state.form}
         />
 
-        <MyList 
+        <MyList
           clientes={clientes}
           edit={this.handleEdit}
           delete={this.handleDelete}
