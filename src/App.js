@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
+import MyForm from "./components/myForm/myForm";
+import MyList from "./components/myList/myList";
 import API from './api';
 
 class App extends Component {
@@ -11,7 +13,11 @@ class App extends Component {
       title: 'Alta de clientes',
       clientes: [],
       index: -1,
-      id: 0
+      id: 0,
+      form: {
+        name: "",
+        lastname: ""
+      }
     }
   }
 
@@ -29,12 +35,12 @@ class App extends Component {
 
     this.setState({
       index: -1,
-      id: 0
+      id: 0,
+      form: {
+        name: "",
+        lastname: ""
+      }
     });
-
-    this.refs.myForm.reset();
-    this.refs.name.focus();
-
 
   }
 
@@ -61,14 +67,23 @@ class App extends Component {
   componentDidMount() {
 
     this.obtenerListado();
-    this.refs.name.focus();
 
+  }
+
+  handleChange = (event) => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    const form = {...this.state.form}
+    form[name] = value;
+    this.setState({form: form});
+    
   }
 
   handleGuardar = () => {
 
-    const name = this.refs.name.value;
-    const lastname = this.refs.lastname.value;
+    const name = this.state.form.name;
+    const lastname = this.state.form.lastname;
 
     const clientes = [...this.state.clientes];
 
@@ -106,15 +121,14 @@ class App extends Component {
 
     const cliente = this.state.clientes[index];
 
-    this.refs.name.value = cliente.name;
-    this.refs.lastname.value = cliente.lastname;
+    const form = {name: cliente.name, lastname:cliente.lastname};
+
+    this.setState({form: form});
 
     this.setState({
       index: index,
       id: id
     });
-
-    this.refs.name.focus();
 
   }
 
@@ -129,37 +143,19 @@ class App extends Component {
 
         <h1>{this.state.title}</h1>
 
-        <div>
-          <form ref="myForm" className={classes.myForm} >
-            <input type="text" ref="name" placeholder="Tu nombre" className={classes.formField} />
-            <input type="text" ref="lastname" placeholder="Tu apellido" className={classes.formField} />
-            <button type="button" onClick={() => this.handleGuardar()} className={classes.myButton}>{btnTextGuardar}</button>
-          </form>
-        </div>
+        <MyForm 
+          textoGuardar={btnTextGuardar}
+          guardar={this.handleGuardar}
+          change={this.handleChange}
+          name={this.state.form.name}
+          lastname={this.state.form.lastname}
+        />
 
-        <div className={classes.div_table}>
-          <table>
-            <thead>
-              <tr>
-                <th>Nombres y Apellidos</th>
-                <th>&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                clientes.map((el, index) =>
-                  <tr key={el.id} className={classes.myList}>
-                    <td>{index + 1}.- {el.name} {el.lastname}</td>
-                    <td>
-                      <button type="button" onClick={() => this.handleEdit(el.id)} className={classes.myListButton + ' ' + classes.editar}   ><i className="far fa-edit"></i></button>
-                      <button type="button" onClick={() => this.handleDelete(el.id)} className={classes.myListButton + ' ' + classes.borrar}><i className="far fa-trash-alt"></i></button>
-                    </td>
-                  </tr>
-                )
-              }
-            </tbody>
-          </table>
-        </div>
+        <MyList 
+          clientes={clientes}
+          edit={this.handleEdit}
+          delete={this.handleDelete}
+        />
 
       </div>
     );
