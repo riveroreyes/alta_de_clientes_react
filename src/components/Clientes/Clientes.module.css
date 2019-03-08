@@ -1,0 +1,42 @@
+.Clientes {
+    margin:auto;
+    width: 50%;
+  }
+  
+  .Clientes h1{
+    text-align: center;
+  }
+  
+  .Clientes table{
+    list-style: none;
+    width: 100%;
+  }
+  
+  .myListButton{
+    display: inline-block;
+    height: auto;
+    width: auto;
+    border:1px solid gray;
+    border-radius: 5px;
+    margin: 3px 5px;
+    background: none;
+  }
+  
+  .editar{
+    color:orange;
+  }
+  
+  .borrar{
+    color:red;
+  }
+  
+  
+  .div_table{
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .Clientes th{
+    text-align: left;
+  }
+  
