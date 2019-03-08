@@ -1,40 +1,71 @@
-import React from "react";
+import React, { Component } from "react";
 import classes from "./myForm.module.css";
 
-const myForm = (props) => {
+export default class myForm extends Component {
 
-  return (
-    <div className="container">
-      <div>
-        <form className={classes.myForm}>
+  render() {
+
+    let controles = [];
+
+    controles = Object.values(this.props.form).map((el, i) => {
+
+
+      if (el.control === "input") {
+
+        return (
           <input
-            type="text"
-            placeholder="Tu nombre"
-            name="name"
+            key={i}
+            type={el.text}
+            placeholder={el.placeholder}
+            name={el.name}
             className={classes.formField}
-            onChange={props.change}
-            value={props.form.name}
+            onChange={this.props.change}
+            value={el.value}
           />
+        );
+
+      }else if( el.control === "checkbox" ){
+
+        return (
           <input
-            type="text"
-            placeholder="Tu apellido"
-            name="lastname"
-            className={classes.formField}
-            onChange={props.change}
-            value={props.form.lastname}
+            key={i}
+            type="checkbox"
+            name={el.name}
+            value={el.value}
+            check={el.check}
           />
-          <button
-            type="button"
-            onClick={() => props.guardar()}
-            className={classes.myButton}
-          >
-            {props.textoGuardar}
-          </button>
-        </form>
+        );
+
+      }else{
+        return null;
+      }
+
+    }
+    )
+
+
+
+    return (
+      <div className="container">
+        <div>
+          <form className={classes.myForm}>
+
+            { controles.map( (el,i) => el )}
+
+            <button
+              type="button"
+              onClick={() => this.props.guardar()}
+              className={classes.myButton}
+            >
+              {this.props.textoGuardar}
+            </button>
+          </form>
+        </div>
+
       </div>
+    );
 
-    </div>
-  );
-};
 
-export default myForm;
+  }
+
+}

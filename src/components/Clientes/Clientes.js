@@ -16,8 +16,9 @@ class Clientes extends Component {
             index: -1,
             id: 0,
             form: {
-                name: "",
-                lastname: ""
+                 name: { control: "input", tipo: "text", name: "name", placeholder: "Tu nombre", value: "" } ,
+                 lastname: { control: "input", tipo: "text", name: "lastname", placeholder: "Tu apellido", value: "" },
+                 activo: { control: "checkbox", tipo: "checkbox", name: "activo", placeholder: null, value: "1", checked:true },
             }
         }
 
@@ -36,13 +37,13 @@ class Clientes extends Component {
 
     resetForm = () => {
 
+        const form = {...this.state.form};
+        Object.values(form).map((el, i) => el.value = "");
+
         this.setState({
             index: -1,
             id: 0,
-            form: {
-                name: "",
-                lastname: ""
-            }
+            form: form
         });
 
     }
@@ -93,17 +94,18 @@ class Clientes extends Component {
     handleChange = (event) => {
 
         const form = { ...this.state.form }
-        form[event.target.name] = event.target.value;
+
+        form[event.target.name].value = event.target.value;
+
         this.setState({ form: form });
 
     }
 
     handleGuardar = () => {
 
-        const name = this.state.form.name;
-        const lastname = this.state.form.lastname;
+        const cliente = {};
 
-        const cliente = { name, lastname };
+        Object.values(this.state.form).map((el, i) => cliente[el.name] = el.value);
 
         if (this.state.index >= 0) {
             this.updateCliente(cliente);
@@ -123,7 +125,9 @@ class Clientes extends Component {
 
         const cliente = this.state.clientes[index];
 
-        const form = { name: cliente.name, lastname: cliente.lastname };
+        const form = {...this.state.form};
+
+        Object.values(form).map( (el,i) => form[el.name].value = cliente[el.name] );
 
         this.setState({
             form: form,
